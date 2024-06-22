@@ -11,6 +11,22 @@ function main(){
         .attr('height', height);
 
     var scale = d3.scaleLinear() // scale for bar dimensions
-        .domain([d3.min(dataPoints), d3.max(dataPoints)])
-        .range([50, 500])
-}  
+        .domain([0, d3.max(dataPoints)])
+        .range([50, width]);
+
+    var bar = svg.selectAll('g') // g elements within the svg 
+        .data(dataPoints)
+        .enter()
+        .append('g')
+        .attr('transform', function(d,i){return `translate(0,${i*(barHeight+margin)})`});
+
+    bar.append('rect') //group for rects (bars)
+        .attr('width',0) //start ->
+        .attr('height', barHeight -1)
+        .style("fill", "green")
+        .transition() //add transition
+        .duration(800)
+        .attr('width', function(d){scale(d)}) //end !
+
+    
+} 
