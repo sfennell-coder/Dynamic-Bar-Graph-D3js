@@ -1,5 +1,5 @@
 function main(){
-    let dataPoints = [100,420,230,850,925]; //data points
+    let dataPoints = [100,420,230,560,925]; //data points
     let width = 500,
     margin = 1,
     barHeight = 20,
@@ -18,15 +18,18 @@ function main(){
         .data(dataPoints)
         .enter()
         .append('g')
-        .attr('transform', function(d,i){return `translate(0,${i*(barHeight+margin)})`});
+        .attr('transform', function(d,i){return `translate(0,${i*(barHeight+margin)})`;});
 
     bar.append('rect') //group for rects (bars)
         .attr('width',0) //start ->
-        .attr('height', barHeight -1)
-        .style("fill", "green")
+        .attr('height', barHeight)
         .transition() //add transition
         .duration(800)
-        .attr('width', function(d){scale(d)}) //end !
+        .attr('width', function(d){scale(d);}) //end !
 
-    
+    bar.append('text')
+        .attr('x', function(d){return (scale(d));})
+        .attr('y', barHeight/2)
+        .attr('dy', '0.35em')
+        .attr(function(d){return d;});
 } 
